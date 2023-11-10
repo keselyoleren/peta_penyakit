@@ -32,16 +32,23 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
-
-INSTALLED_APPS = [
+DJANGO_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles'
 ]
+
+
+LOCAL_APP = [
+    'case',
+    'manage_users'
+] 
+
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APP 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -132,3 +139,15 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'manage_users.AccountUser'
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Admin Peta Penyakit",
+    "site_header": "Admin Peta Penyakit",
+    "copyright": "Admin Peta Penyakit",
+    # icon
+
+    # custom list sidebar
+    "order_with_respect_to": ["auth"],
+    "navigation_expanded": False,
+}

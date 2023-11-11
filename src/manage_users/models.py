@@ -20,8 +20,6 @@ class AccountUser(AbstractUser):
     role = models.CharField("Role", max_length=50, choices=RoleUser.choices, default=RoleUser.USER)
     puskeswan = models.ForeignKey("Puskeswan", on_delete=models.CASCADE, related_name="account_user", null=True, blank=True)
 
-
-
 class Feedback(BaseModel):
     name = models.CharField("Name", max_length=255)
     email = models.EmailField("Email", max_length=255)

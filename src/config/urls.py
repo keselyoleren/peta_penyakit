@@ -13,9 +13,33 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+from webbrowser import get
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
+from django.views.generic import TemplateView
+
+from case.views.login_views import ChangePasswordAdminView, CustomPasswordChangeView, LogoutView, ProfileUserApiView, UserLoginView
+from config.permis import LoginRequiredMixin
+
+class IndexPage(LoginRequiredMixin, TemplateView):
+    template_name = 'index.html'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", IndexPage.as_view()),
+    path("", include('manage_users.urls'), name="manage_users"),
+    path("", include('case.urls'), name="case"),
+    path("auth/", include([
+        path("login/", UserLoginView.as_view(), name="login"),
+        path("logout/", LogoutView.as_view(), name="logout"),
+        path("change-password/", CustomPasswordChangeView.as_view(), name="change-password"),
+        path('change-password-admin/<int:user_id>/', ChangePasswordAdminView.as_view(), name="change-password-admin"),
+        path('profile/', ProfileUserApiView.as_view(), name='profile'),
+    ])),
+
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,89 @@
+{% load static %}
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-text">Peta Penyakit</div>
+    </a>
+    
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <div class="sidebar-heading">
+        Manage Users
+    </div>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'user-list' %}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Users</span></a>
+    </li>
+    
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Manage Wilayah
+    </div>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'province-list' %}">
+            <i class="fas fa-fw fa-map-marker"></i>
+            <span>Province</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'regency-list' %}">
+            <i class="fas fa-fw fa-map-marker"></i>
+            <span>Regency</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'subdistrict-list' %}">
+            <i class="fas fa-fw fa-map-marker"></i>
+            <span>Subdistrict</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'village-list' %}">
+            <i class="fas fa-fw fa-map-marker"></i>
+            <span>Village</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Manage Puskeswan
+    </div>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'puskeswan-list' %}">
+            <i class="fas fa-fw fa-comments"></i>
+            <span>Puskeswan</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'disease-list' %}">
+            <i class="fas fa-fw fa-info"></i>
+            <span>Diseases</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="">
+            <i class="fas fa-fw fa-info"></i>
+            <span>Cases</span></a>
+    </li>
+    
+    <hr class="sidebar-divider">
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>

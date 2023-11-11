@@ -26,7 +26,8 @@ class VillageListView(IsAuthenticated, ListView):
         context = super().get_context_data(**kwargs)
         context['sub_district_name'] = ''
         with contextlib.suppress(Exception):
-            if sub_district_name := SubDistrict.objects.filter(id=self.request.GET.get('sub_district', None)).first():
+            sub_district_name = SubDistrict.objects.filter(id=self.request.GET.get('sub_district', None)).first()
+            if sub_district_name: 
                 context['sub_district_name'] = sub_district_name.name
         context['header'] = 'Vlillage'
         context['header_title'] = 'List Vlillage'

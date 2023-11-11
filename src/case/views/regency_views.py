@@ -22,7 +22,8 @@ class RegencyListView(IsAuthenticated, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['province_name'] = ''
-        if province := Province.objects.filter(id=self.request.GET.get('province', None)).first():
+        province = Province.objects.filter(id=self.request.GET.get('province', None)).first()
+        if province:
             context['province_name'] = province.name
         context['header'] = 'Regency'
         context['header_title'] = 'List Regency'

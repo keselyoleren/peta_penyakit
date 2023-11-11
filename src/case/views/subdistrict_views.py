@@ -28,7 +28,8 @@ class SubDistrictListView(IsAuthenticated, ListView):
         context = super().get_context_data(**kwargs)
         context['regency_name'] = ''
         with contextlib.suppress(Exception):
-            if regency := Regency.objects.filter(id=self.request.GET.get('regency', None)).first():
+            regency = Regency.objects.filter(id=self.request.GET.get('regency', None)).first()
+            if regency:
                 context['regency_name'] = regency.name
         context['header'] = 'Sub District'
         context['header_title'] = 'List Sub District'

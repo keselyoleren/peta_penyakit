@@ -7,8 +7,17 @@ from case.views.puskeswan_views import *
 from case.views.regency_views import *
 from case.views.subdistrict_views import *
 from case.views.village_views import *
+from case.views.case_views import *
 
 urlpatterns = [
+
+    path("case/", include([
+        path('', CaseListView.as_view(), name='case-list'),
+        path('create/', CaseCreateView.as_view(), name='case-create'),
+        path('update/<uuid:pk>/', CaseUpdateView.as_view(), name='case-update'),
+        path('delete/<uuid:pk>/', CaseDeleteView.as_view(), name='case-delete'),
+    ])),
+
     path("pueskeswan/", include([
         path('', PuskeswanListView.as_view(), name='puskeswan-list'),
         path('create/', PuskeswanCreateView.as_view(), name='puskeswan-create'),

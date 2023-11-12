@@ -21,7 +21,6 @@ class Regency(BaseModel):
 class SubDistrict(BaseModel):
     name = models.CharField("Name", max_length=255)
     regency = models.ForeignKey("Regency", on_delete=models.CASCADE, related_name="sub_district")
-    puskeswan = models.ForeignKey(Puskeswan, on_delete=models.CASCADE, blank=True, null=True, related_name="sub_district")
     
     def __str__(self) -> str:
         return self.name
@@ -45,11 +44,11 @@ class Disease(BaseModel):
 
 
 class Case(BaseModel):
-    address = models.CharField("Address", max_length=255)
-    date_discovered = models.DateTimeField("Date Discovered")
-    animal = models.CharField("Animal", max_length=255)
+    address = models.CharField("Aalamat", max_length=255)
     village = models.ForeignKey("Village", on_delete=models.CASCADE, blank=True, null=True)
+    animal = models.CharField("Animal", max_length=255)
     diseases = models.ForeignKey("Disease", on_delete=models.CASCADE, blank=True, null=True)
+    date_discovered = models.DateTimeField("Date Discovered")
     longitude = models.BigIntegerField("Longitude")
     latitude = models.BigIntegerField("Latitude")
     total_case = models.IntegerField("Total Case")

@@ -13,6 +13,7 @@ from config.models import BaseModel
 class Puskeswan(BaseModel):
     name = models.CharField("Name", max_length=255)
     code = models.CharField("Code", max_length=255)
+    wilayah_pelayanan = models.ManyToManyField('case.SubDistrict', related_name="puskeswan", blank=True)
     created_by = models.ForeignKey("AccountUser", on_delete=models.CASCADE, related_name="Puskeswan")
 
 class AccountUser(AbstractUser):

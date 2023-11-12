@@ -24,7 +24,7 @@ class PuskeswanListView(IsAuthenticated, ListView):
 
 class PuskeswanCreateView(IsAuthenticated, CreateView):
     model = Puskeswan
-    template_name = 'component/form.html'
+    template_name = 'puskeswan/form.html'
     form_class = PuskeswanForm
     success_url = reverse_lazy('puskeswan-list')
 
@@ -39,7 +39,7 @@ class PuskeswanCreateView(IsAuthenticated, CreateView):
 
 class PuskeswanUpdateView(IsAuthenticated, UpdateView):
     model = Puskeswan
-    template_name = 'component/form.html'
+    template_name = 'puskeswan/form.html'
     form_class = PuskeswanForm
     success_url = reverse_lazy('puskeswan-list')
 

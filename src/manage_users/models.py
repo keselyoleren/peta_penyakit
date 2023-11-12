@@ -16,10 +16,16 @@ class Puskeswan(BaseModel):
     wilayah_pelayanan = models.ManyToManyField('case.SubDistrict', related_name="puskeswan", blank=True)
     created_by = models.ForeignKey("AccountUser", on_delete=models.CASCADE, related_name="Puskeswan")
 
+    def __str__(self) -> str:
+        return self.name
+
 class AccountUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     role = models.CharField("Role", max_length=50, choices=RoleUser.choices, default=RoleUser.USER)
     puskeswan = models.ForeignKey("Puskeswan", on_delete=models.CASCADE, related_name="account_user", null=True, blank=True)
+
+    def __str__(self) -> str:
+        return self.username
 
 class Feedback(BaseModel):
     name = models.CharField("Name", max_length=255)
@@ -28,3 +34,6 @@ class Feedback(BaseModel):
     is_map_use_full = models.BooleanField("Is Map Use Full", default=True)
     is_facility_use_full = models.BooleanField("Is Facility Use Full", default=True)
     comment = models.TextField("Comment")
+
+    def __str__(self) -> str:
+        self.name

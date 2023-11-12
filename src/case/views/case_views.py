@@ -5,12 +5,12 @@ from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate
 from case.form.case_form import CaseForm
 
-from config.permis import IsAuthenticated
+from config.permis import IsPublicAuth
 from case.models import Case
 
 
 
-class CaseListView(IsAuthenticated, ListView):
+class CaseListView(IsPublicAuth, ListView):
     model = Case
     template_name = 'case/list.html'
     context_object_name = 'list_case'
@@ -23,7 +23,7 @@ class CaseListView(IsAuthenticated, ListView):
         context['create_url'] = reverse_lazy('case-create')
         return context
 
-class CaseCreateView(IsAuthenticated, CreateView):
+class CaseCreateView(IsPublicAuth, CreateView):
     model = Case
     template_name = 'case/form.html'
     form_class = CaseForm
@@ -38,7 +38,7 @@ class CaseCreateView(IsAuthenticated, CreateView):
     def form_valid(self, form):
         return super().form_valid(form)
 
-class CaseUpdateView(IsAuthenticated, UpdateView):
+class CaseUpdateView(IsPublicAuth, UpdateView):
     model = Case
     template_name = 'case/form.html'
     form_class = CaseForm
@@ -50,7 +50,7 @@ class CaseUpdateView(IsAuthenticated, UpdateView):
         context['header_title'] = 'Edit Case'
         return context
 
-class CaseDeleteView(IsAuthenticated, DeleteView):
+class CaseDeleteView(IsPublicAuth, DeleteView):
     model = Case
     template_name = 'component/delete.html'
     success_url = reverse_lazy('case-list')

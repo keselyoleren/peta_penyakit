@@ -37,18 +37,6 @@
 
         <!-- Nav Item - User Information -->
         {% if request.user.is_authenticated %}
-        <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button">
-                {% if request.user.is_superuser %}
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Super Admin</span>
-                {% elif request.user.role_user == 'super admin' %}
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Super Admin</span>
-                {% else %}
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ request.user.ptm_location.location }}</span>
-                {% endif %}
-            </a>
-        </li>
-
         <div class="topbar-divider d-none d-sm-block"></div>
         
         <li class="nav-item dropdown no-arrow">

@@ -83,30 +83,26 @@ class LoginViewMixinUser(AccessMixin):
         
 class IsAuthenticated(AccessMixin):
     def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs) if request.user.is_authenticated else self.handle_no_permission()
+        if request.user.is_authenticated and self.request.user.is_superuser:
+            return super().dispatch(request, *args, **kwargs) 
+        else:
+            self.handle_no_permission()
 
-
-class IsAdmin(AccessMixin):
+class IsPublicAuth(AccessMixin):
     def dispatch(self, request, *args, **kwargs):
-        if request.user.role == RoleUser.ADMIN:
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            return super().dispatch(request, *args, **kwargs) 
+        else:
+            self.handle_no_permission()
 
 class IsPuskeswan(AccessMixin):
     def dispatch(self, request, *args, **kwargs):
-        if request.user.role == RoleUser.PUSKESWAN:
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
+        if request.user.role == RoleUser.PUSKESWAN or request.user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        return self.handle_no_permission()
 
 class IsUser(AccessMixin):
     def dispatch(self, request, *args, **kwargs):
-        if request.user.role == RoleUser.USER:
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
-
-
-class IsSuperAdmin(AccessMixin):
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_superuser:
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
+        if request.user.role == RoleUser.USER or request.user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        return self.handle_no_permission()

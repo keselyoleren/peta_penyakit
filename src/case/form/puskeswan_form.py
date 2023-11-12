@@ -21,7 +21,7 @@ class PuskeswanForm(AbstractForm):
         css = {
             'all': ('/static/jazzmin/css/main.css',),
         }
-        js = ('/admin/jsi18n',)
+        js = ('/jsi18n',)
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

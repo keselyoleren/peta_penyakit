@@ -4,25 +4,33 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
-from config.permis import IsAuthenticated
+from config.choice import RoleUser
+from config.permis import IsAuthenticated, IsPuskeswan
 from manage_users.form.user_form import AccountUserForm, UserForm
 from manage_users.models import AccountUser
 
 
-class AccountUserListView(IsAuthenticated, ListView):
+class AccountUserListView(IsPuskeswan, ListView):
     model = AccountUser
     template_name = 'users/list.html'
     context_object_name = 'list_users'
+    
+    def get_queryset(self):
+        if self.request.user.role == RoleUser.PUSKESWAN:
+            return AccountUser.objects.filter(puskeswan=self.request.user.puskeswan)
+        return super().get_queryset()
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['header'] = 'User'
         context['header_title'] = 'List User'
         context['btn_add'] = True
+        if self.request.user.role == RoleUser.PUSKESWAN:
+            context['btn_add'] = False
         context['create_url'] = reverse_lazy('user-create')
         return context
 
-class AccountUserCreateView(IsAuthenticated, CreateView):
+class AccountUserCreateView(IsPuskeswan, CreateView):
     model = AccountUser
     template_name = 'component/form.html'
     form_class = AccountUserForm
@@ -35,10 +43,9 @@ class AccountUserCreateView(IsAuthenticated, CreateView):
         return context
 
     def form_valid(self, form):
-        print(form.cleaned_data.get('email'))
         return super().form_valid(form)
 
-class AccountUserUpdateView(IsAuthenticated, UpdateView):
+class AccountUserUpdateView(IsPuskeswan, UpdateView):
     model = AccountUser
     template_name = 'component/form.html'
     form_class = UserForm
@@ -50,7 +57,7 @@ class AccountUserUpdateView(IsAuthenticated, UpdateView):
         context['header_title'] = 'Edit User'
         return context
 
-class AccountUserDeleteView(IsAuthenticated, DeleteView):
+class AccountUserDeleteView(IsPuskeswan, DeleteView):
     model = AccountUser
     template_name = 'component/delete.html'
     success_url = reverse_lazy('user-list')

@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Peta Penyakit | Login</title>
+    <title>Sign Up | Peta Penyakit</title>
 
     <!-- Custom fonts for this template-->
     <link href="{% static 'sb/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -19,11 +20,14 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{% static  'sb/css/sb-admin-2.min.css'%}" rel="stylesheet">
+    <link href="{% static 'sb/css/sb-admin-2.min.css'%}" rel="stylesheet">
+    <link href="{% static 'sb/vendor/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
+    <!-- DateTimePicker JS -->
+    
 
 </head>
 
@@ -43,15 +47,18 @@
                             </div>
                             <form method="POST" action=".">
                                 {% csrf_token %}
-                                {{ form }}
+                                <tr><th><label for="id_username">Username:</label></th><td><input type="text" name="username" autofocus class="form-control" autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username"></td></tr>
+                                <tr><th><label for="id_password1">Password:</label></th><td><input type="password" name="password1" autocomplete="current-password" class="form-control" pnameholder="Password" required id="id_password1"></td></tr>
+                                <tr><th><label for="id_password2">Validate Password:</label></th><td><input type="password" name="password2" autocomplete="current-password" class="form-control" pnameholder="validate Password" required id="id_password2"></td></tr>
+                                <tr><th><label for="kode_puskeswan">Kode Puskeswan:</label></th><td><input type="text" name="puskeswan_code"  class="form-control" pnameholder="kode puskeswan" required id="id_password"></td></tr>
                                 <br>
                                 <div class="d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">Sign In</button>
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">Sign Up</button>
                                 </div>
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="{% url 'register' %}">Register?</a>
+                                <a class="small" href="{% url 'login' %}">Login?</a>
                             </div>
                         </div>
                     </div>

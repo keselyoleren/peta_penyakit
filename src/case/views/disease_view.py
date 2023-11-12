@@ -4,12 +4,12 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate
 
-from config.permis import IsAuthenticated
+from config.permis import IsAuthenticated, IsPuskeswan
 from case.models import Disease
 from case.form.diseases_form import DiseaseForm
 
 
-class DiseaseListView(IsAuthenticated, ListView):
+class DiseaseListView(IsPuskeswan, ListView):
     model = Disease
     template_name = 'disease/list.html'
     context_object_name = 'list_disease'
@@ -22,7 +22,7 @@ class DiseaseListView(IsAuthenticated, ListView):
         context['create_url'] = reverse_lazy('disease-create')
         return context
 
-class DiseaseCreateView(IsAuthenticated, CreateView):
+class DiseaseCreateView(IsPuskeswan, CreateView):
     model = Disease
     template_name = 'component/form.html'
     form_class = DiseaseForm
@@ -37,7 +37,7 @@ class DiseaseCreateView(IsAuthenticated, CreateView):
     def form_valid(self, form):
         return super().form_valid(form)
 
-class DiseaseUpdateView(IsAuthenticated, UpdateView):
+class DiseaseUpdateView(IsPuskeswan, UpdateView):
     model = Disease
     template_name = 'component/form.html'
     form_class = DiseaseForm
@@ -49,7 +49,7 @@ class DiseaseUpdateView(IsAuthenticated, UpdateView):
         context['header_title'] = 'Edit Disease'
         return context
 
-class DiseaseDeleteView(IsAuthenticated, DeleteView):
+class DiseaseDeleteView(IsPuskeswan, DeleteView):
     model = Disease
     template_name = 'component/delete.html'
     success_url = reverse_lazy('disease-list')

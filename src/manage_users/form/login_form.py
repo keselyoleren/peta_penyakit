@@ -1,7 +1,7 @@
-
-from pyexpat import model
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UsernameField
+from django.contrib.auth.forms import UserCreationForm
+
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth import (
@@ -18,8 +18,14 @@ class LoginForm(AuthenticationForm):
         widget=forms.PasswordInput(attrs={'autocomplete': 'current-password', 'class':'form-control', 'pnameholder': 'Password'}),
     )
 
-    
-    
+class RegisterForm(UserCreationForm):
+    class Meta:
+        model = AccountUser
+        fields = ('username', 'email', 'password1', 'password2')
+
+
+
+
 class ProfileForm(AbstractForm):
     class Meta:
         model = AccountUser

@@ -6,14 +6,16 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.contrib import messages
 from case.form.login_form import AdminPasswordChangeForm, LoginForm, ProfileForm
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from config.permis import IsAuthenticated, IsLoginAuthenticated, LoginRequiredMixin
 
 from django.views.generic.edit import UpdateView
 from config.choice import RoleUser
 from django.contrib.auth.views import PasswordChangeView
+from manage_users.form.login_form import RegisterForm
 
-from manage_users.models import AccountUser
+from manage_users.models import AccountUser, Puskeswan
 
 class UserLoginView(IsLoginAuthenticated ,LoginView):
     template_name = 'auth/login.html'
@@ -111,3 +113,18 @@ class ProfileUserApiView(LoginRequiredMixin, UpdateView):
         messages.success(self.request, "Profile berhasil di update")
         return '/'
         
+class SignUpView(CreateView):
+    form_class = RegisterForm
+    success_url = reverse_lazy('login')  # Redirect to login page upon successful registration
+    template_name = 'auth/register.html'
+
+    def form_valid(self, form):
+        puskes_code = self.request.POST.get('puskeswan_code', None)
+        puskeswan = Puskeswan.objects.filter(code=puskes_code).first()
+        if puskeswan:
+            form.instance.puskeswan = puskeswan
+            messages.success(self.request, "Registrasi berhasil, silahkan login")
+            return super().form_valid(form)
+        else:
+            messages.error(self.request, "Kode Puskeswan tidak ditemukan")
+            return super().form_invalid(form)

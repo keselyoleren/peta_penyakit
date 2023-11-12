@@ -10,12 +10,13 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="/">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
 
     <!-- Divider -->
+    {% if request.user.is_superuser %}
     <hr class="sidebar-divider">
 
     <div class="sidebar-heading">
@@ -80,6 +81,53 @@
             <i class="fas fa-fw fa-info"></i>
             <span>Cases</span></a>
     </li>
+    {% elif request.user.role == 'puskeswan' %}
+    <hr class="sidebar-divider">
+
+    <div class="sidebar-heading">
+        Manage Users
+    </div>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'user-list' %}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Users</span></a>
+    </li>
+    <hr class="sidebar-divider">
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Manage Puskeswan
+    </div>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'puskeswan-list' %}">
+            <i class="fas fa-fw fa-comments"></i>
+            <span>Puskeswan</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'disease-list' %}">
+            <i class="fas fa-fw fa-info"></i>
+            <span>Diseases</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'case-list' %}">
+            <i class="fas fa-fw fa-info"></i>
+            <span>Cases</span></a>
+    </li>
+
+    {% elif request.user.role == 'user' %}
+        <hr class="sidebar-divider">
+        <div class="sidebar-heading">
+            Manage Cases
+        </div>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'case-list' %}">
+                <i class="fas fa-fw fa-info"></i>
+                <span>Cases</span></a>
+        </li>
+    {% endif %}
     
     <hr class="sidebar-divider">
     <div class="text-center d-none d-md-inline">

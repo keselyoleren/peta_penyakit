@@ -9,6 +9,7 @@ from case.models import *
 from case.serialize.address_serialize import *
 from config.pagination import ResponsePagination
 
+
 class ProvicnceViews(generics.ListAPIView):
     serializer_class = ProvinceSerialize
     queryset = Province.objects.all()

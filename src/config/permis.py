@@ -86,7 +86,7 @@ class IsAuthenticated(AccessMixin):
         if request.user.is_authenticated and self.request.user.is_superuser:
             return super().dispatch(request, *args, **kwargs) 
         else:
-            self.handle_no_permission()
+            return self.handle_no_permission()
 
 class IsPublicAuth(AccessMixin):
     def dispatch(self, request, *args, **kwargs):

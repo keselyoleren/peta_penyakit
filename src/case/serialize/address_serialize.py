@@ -5,19 +5,19 @@ from case.models import Province, Regency, SubDistrict, Village
 class ProvinceSerialize(serializers.ModelSerializer):
     class Meta:
         model = Province
-        fields = "__all__"
+        exclude = ('created_at', 'updated_at')
 
 class RegencySerialize(serializers.ModelSerializer):
     class Meta:
         model = Regency
-        fields = "__all__"
+        exclude = ('created_at', 'updated_at')
 
 class SubDistrictSerialize(serializers.ModelSerializer):
     class Meta:
         model = SubDistrict
-        fields = "__all__"
+        exclude = ('created_at', 'updated_at')
 
 class VillageSerialize(serializers.ModelSerializer):
     class Meta:
         model = Village
-        fields = "__all__"
+        exclude = ('created_at', 'updated_at')

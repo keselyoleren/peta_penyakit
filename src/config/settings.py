@@ -43,6 +43,8 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework.authtoken',
+
 ]
 
 
@@ -159,4 +161,11 @@ JAZZMIN_SETTINGS = {
     # custom list sidebar
     "order_with_respect_to": ["auth"],
     "navigation_expanded": False,
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+ 
 }

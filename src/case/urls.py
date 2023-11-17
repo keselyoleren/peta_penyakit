@@ -66,5 +66,6 @@ urlpatterns = [
             path("district/<uuid:regency_id>/", SubDistrictApiView.as_view() , name=""),
             path("village/<uuid:sub_district_id>/", VillageApiView.as_view() , name="")
         ])),
+
     ]))
 ]

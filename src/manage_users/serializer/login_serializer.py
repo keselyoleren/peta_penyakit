@@ -27,7 +27,7 @@ class RegisterSerialize(serializers.Serializer):
     #     model = AccountUser
     #     fields = "__all__"
 
-    def validate_puskeswan_code(self, value):
+    def validate_puskeswanCode(self, value):
         if not value:
             raise serializers.ValidationError(_('Puskeswan Code is required..!'))
         if value:

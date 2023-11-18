@@ -1,8 +1,11 @@
 # myapp/urls.py
 from django.urls import path, include
 from case.views.address_views import *
+from case.views.case_api_views import CaseApiView
 from case.views.disease_view import *
+from case.views.diseases_api_views import DiseasesApiView
 from case.views.province_view import *
+from case.views.puskeswan_api_views import PueskeswanSubDistrictApiView
 from case.views.puskeswan_views import *
 from case.views.regency_views import *
 from case.views.subdistrict_views import *
@@ -66,6 +69,15 @@ urlpatterns = [
             path("district/<uuid:regency_id>/", SubDistrictApiView.as_view() , name=""),
             path("village/<uuid:sub_district_id>/", VillageApiView.as_view() , name="")
         ])),
+
+        path('puskeswan/', include([
+            path('district/', PueskeswanSubDistrictApiView.as_view(), name='district-puskeswan'),
+        ])),
+
+        path('case/', include([
+            path("", CaseApiView.as_view(), name="case"),
+            path('diseases/', DiseasesApiView.as_view(), name='diseases'),
+        ]))
 
     ]))
 ]

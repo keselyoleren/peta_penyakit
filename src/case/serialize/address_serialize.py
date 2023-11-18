@@ -44,10 +44,22 @@ class SubDistrictPuskeswanSerialize(serializers.ModelSerializer):
             'villages': Village.objects.filter(sub_district=obj.id).count()
         }
 
+
 class VillageSerialize(serializers.ModelSerializer):
     class Meta:
         model = Village
         exclude = ('created_at', 'updated_at')
+
+class SubDistrictAndVillagePuskeswanSerialize(serializers.ModelSerializer):
+    villages = serializers.SerializerMethodField()
+    class Meta:
+        model = SubDistrict
+        fields = ('id', 'name', 'villages')
+
+    def get_villages(self, obj):
+        village =  Village.objects.filter(sub_district=obj.id)
+        return VillageSerialize(village, many=True).data
+
 
 class VillageDtetailSerialize(serializers.ModelSerializer):
     sub_district = SubDistrictPuskeswanSerialize()

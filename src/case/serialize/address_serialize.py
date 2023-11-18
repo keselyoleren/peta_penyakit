@@ -27,11 +27,17 @@ class SubDistrictPuskeswanSerialize(serializers.ModelSerializer):
         fields = ('id', 'name', 'puskeswan','count')
 
     def get_puskeswan(self, obj):
-        pus = Puskeswan.objects.filter(wilayah_pelayanan=obj.id).first()
-        return {
-            'id': pus.id,
-            'name': pus.name,
-        }
+        try:
+            pus = Puskeswan.objects.filter(wilayah_pelayanan=obj.id).first()
+            return {
+                'id': pus.id,
+                'name': pus.name,
+            }
+        except:
+            return {
+                'id': None,
+                'name': None,
+            }
     
     def get_count(self, obj):
         return {

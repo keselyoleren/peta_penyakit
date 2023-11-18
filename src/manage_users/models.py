@@ -34,6 +34,7 @@ class Feedback(BaseModel):
     is_map_use_full = models.BooleanField("Is Map Use Full", default=True)
     is_facility_use_full = models.BooleanField("Is Facility Use Full", default=True)
     comment = models.TextField("Comment")
+    created_by = models.ForeignKey("AccountUser", on_delete=models.CASCADE, related_name="feedback", blank=True, null=True)
 
     def __str__(self) -> str:
-        self.name
+        return self.name

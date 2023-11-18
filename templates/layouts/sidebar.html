@@ -81,6 +81,13 @@
             <i class="fas fa-fw fa-info"></i>
             <span>Cases</span></a>
     </li>
+    
+    <hr class="sidebar-divider">
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'feedback-list' %}">
+            <i class="fas fa-fw fa-info"></i>
+            <span>Fedback</span></a>
+    </li>
     {% elif request.user.role == 'puskeswan' %}
     <hr class="sidebar-divider">
 
@@ -115,6 +122,14 @@
         <a class="nav-link" href="{% url 'case-list' %}">
             <i class="fas fa-fw fa-info"></i>
             <span>Cases</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'feedback-list' %}">
+            <i class="fas fa-fw fa-info"></i>
+            <span>Fedback</span></a>
     </li>
 
     {% elif request.user.role == 'user' %}

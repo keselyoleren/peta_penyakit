@@ -4,6 +4,8 @@ from case.views.address_views import *
 from case.views.case_api_views import CaseApiView
 from case.views.disease_view import *
 from case.views.diseases_api_views import DiseasesApiView
+from case.views.feedback_api_views import FeedbackApiView
+from case.views.feedback_views import FeedbackListView
 from case.views.province_view import *
 from case.views.puskeswan_api_views import PueskeswanSubDistrictApiView, PueskeswanSubDistrictVillageApiView
 from case.views.puskeswan_views import *
@@ -12,8 +14,14 @@ from case.views.subdistrict_views import *
 from case.views.village_views import *
 from case.views.case_views import *
 
-urlpatterns = [
+from rest_framework import routers
 
+route = routers.DefaultRouter()
+route.register(r'feedback', FeedbackApiView, basename='feedback-api')
+
+url = route.urls
+
+urlpatterns = [
     path("case/", include([
         path('', CaseListView.as_view(), name='case-list'),
         path('create/', CaseCreateView.as_view(), name='case-create'),
@@ -62,6 +70,8 @@ urlpatterns = [
         path('delete/<uuid:pk>/', VillageDeleteView.as_view(), name='village-delete'),
     ])),
 
+    path("feedback/",FeedbackListView.as_view(), name='feedback-list'),
+
     path('api/', include([
         path('address/', include([
             path("province/", ProvicnceViews.as_view(), name=""),
@@ -79,7 +89,9 @@ urlpatterns = [
         path('case/', include([
             path("", CaseApiView.as_view(), name="case"),
             path('diseases/', DiseasesApiView.as_view(), name='diseases'),
-        ]))
+        ])),
+
+        path("", include(url), name="")
 
     ]))
 ]

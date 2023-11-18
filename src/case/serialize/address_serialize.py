@@ -42,3 +42,9 @@ class VillageSerialize(serializers.ModelSerializer):
     class Meta:
         model = Village
         exclude = ('created_at', 'updated_at')
+
+class VillageDtetailSerialize(serializers.ModelSerializer):
+    sub_district = SubDistrictPuskeswanSerialize()
+    class Meta:
+        model = Village
+        exclude = ('created_at', 'updated_at')

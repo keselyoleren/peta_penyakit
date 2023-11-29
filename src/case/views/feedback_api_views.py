@@ -37,7 +37,8 @@ class FeedbackApiView(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         validate_data = request.data
-        validate_data['created_by'] = request.user.id
+        if self.request.user.is_authenticated:
+            validate_data['created_by'] = request.user.id
         serialize = self.serializer_class(data=validate_data)
         serialize.is_valid(raise_exception=True)
         self.perform_create(serialize)

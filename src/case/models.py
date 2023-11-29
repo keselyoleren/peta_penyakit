@@ -29,8 +29,8 @@ class Village(BaseModel):
     name = models.CharField("Name", max_length=255)
     sub_district = models.ForeignKey("SubDistrict", on_delete=models.CASCADE, related_name="village")
     kode_pos = models.CharField("Kode Pos", max_length=255)
-    longitude = models.BigIntegerField("Longitude", blank=True, null=True)
-    latitude = models.BigIntegerField("Latitude", blank=True, null=True)
+    longitude = models.CharField("Longitude", max_length=255, blank=True, null=True)
+    latitude = models.CharField("Latitude", max_length=255, blank=True, null=True)
 
     def __str__(self) -> str:
         return self.name
@@ -49,8 +49,8 @@ class Case(BaseModel):
     animal = models.CharField("Animal", max_length=255)
     diseases = models.ForeignKey("Disease", on_delete=models.CASCADE, blank=True, null=True)
     date_discovered = models.DateTimeField("Date Discovered")
-    longitude = models.BigIntegerField("Longitude")
-    latitude = models.BigIntegerField("Latitude")
+    longitude = models.CharField("Longitude", max_length=255, blank=True, null=True)
+    latitude = models.CharField("Latitude", max_length=255, blank=True, null=True)
     total_case = models.IntegerField("Total Case")
 
     def __str__(self) -> str:

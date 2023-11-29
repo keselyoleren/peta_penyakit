@@ -1,6 +1,3 @@
-import email
-from pyexpat import model
-from unicodedata import name
 import uuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -34,6 +31,7 @@ class Feedback(BaseModel):
     is_map_use_full = models.BooleanField("Is Map Use Full", default=True)
     is_facility_use_full = models.BooleanField("Is Facility Use Full", default=True)
     comment = models.TextField("Comment")
+    sub_district = models.ForeignKey("case.SubDistrict", on_delete=models.CASCADE, blank=True, null=True)
     created_by = models.ForeignKey("AccountUser", on_delete=models.CASCADE, related_name="feedback", blank=True, null=True)
 
     def __str__(self) -> str:

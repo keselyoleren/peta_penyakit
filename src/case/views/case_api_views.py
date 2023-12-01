@@ -1,3 +1,4 @@
+from datetime import datetime
 from rest_framework import (
     generics,
     status,
@@ -52,4 +53,25 @@ class CaseApiView(generics.ListAPIView):
 
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
+
+
+class ImportCaseView(generics.CreateAPIView):
+    serializer_class = CaseSerialize
+    queryset = Case.objects.all()
+    permission_classes = [AllowAny | IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        data = self.request.data
+        for x in data:
+            cases = Case.objects.create(
+                animal=x['animal'],
+                diseases_id=x['diseaseId'],
+                village_id=x['villageId'],
+                address=x['address'],
+                latitude=x['latitude'],
+                longitude=x['longitude'],
+                date_discovered= datetime.strptime(x['dateDiscovered'], "%d/%m/%Y"),
+                total_case=x['jumlah'],
+            )
+        return response.Response({"message":"success import"})
         

@@ -1,7 +1,7 @@
 # myapp/urls.py
 from django.urls import path, include
 from case.views.address_views import *
-from case.views.case_api_views import CaseApiView
+from case.views.case_api_views import CaseApiView, ImportCaseView
 from case.views.disease_view import *
 from case.views.diseases_api_views import DiseasesApiView
 from case.views.feedback_api_views import FeedbackApiView
@@ -88,7 +88,9 @@ urlpatterns = [
 
         path('case/', include([
             path("", CaseApiView.as_view(), name="case"),
+            path("import/", ImportCaseView.as_view(), name="import-case"),
             path('diseases/', DiseasesApiView.as_view(), name='diseases'),
+            
         ])),
 
         path("", include(url), name="")

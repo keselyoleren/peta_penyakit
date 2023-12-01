@@ -9,9 +9,9 @@ from .models import AccountUser, Feedback, Puskeswan
 # Register your models here.
 @admin.register(AccountUser)
 class UserAdmin(BaseUserAdmin):
-    list_display = ('username','email','role', 'is_superuser')
+    list_display = ('username','email','role', 'is_superuser', 'puskeswan')
     fieldsets = (
-        (None, {'fields': ('username', 'password', 'role')}),
+        (None, {'fields': ('username', 'password', 'role', 'puskeswan')}),
         (_('Personal info'), {'fields': (
             'first_name', 
             'last_name', 

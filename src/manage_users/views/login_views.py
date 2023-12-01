@@ -16,8 +16,27 @@ class UserLoginView(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
         token, created = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key, 'user': UserSerialize(user).data}, status=status.HTTP_200_OK)
 
+        try:
+            return Response({
+                'token': token.key, 
+                'user': UserSerialize(user).data,
+                'role': user.role,
+                'puskeswan': {
+                    'id': user.puskeswan.id,
+                    'name': user.puskeswan.name,
+                }
+            }, status=status.HTTP_200_OK)
+        except Exception:
+            return Response({
+                'token': token.key,
+                'user': UserSerialize(user).data,
+                'role': user.role,
+                'puskeswan': {
+                    'id': None,
+                    'name': None,
+                }
+            }, status=status.HTTP_200_OK)
 
 
 class UserRegisterView(APIView):
@@ -34,4 +53,25 @@ class UserRegisterView(APIView):
                     puskeswan=puskeswan
                 )
             token, created = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key, 'user': UserSerialize(user).data}, status=status.HTTP_200_OK)
+            try:
+                return Response(
+                    {
+                        'token': token.key, 
+                        'user': UserSerialize(user).data,
+                        'role': user.role,
+                        'puskeswan': {
+                            'id': user.puskeswan.id,
+                            'name': user.puskeswan.name,
+                        }
+                    }, 
+                    status=status.HTTP_200_OK)
+            except Exception:
+                return Response({
+                    'token': token.key,
+                    'user': UserSerialize(user).data,
+                    'role': user.role,
+                    'puskeswan': {
+                        'id': None,
+                        'name': None,
+                    }
+                }, status=status.HTTP_200_OK)

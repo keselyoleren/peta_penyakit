@@ -101,3 +101,23 @@
 
     
 {% endblock  %}
+{% block js %}
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+<script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('62adf21c715a4a5f02a9', {
+      cluster: 'ap1'
+    });
+
+    console.log(pusher);
+
+    var channel = pusher.subscribe('penyakit-channel');
+    channel.bind('progress-event', function(data) {
+      console.log(JSON.stringify(data));
+    });
+  </script>
+
+  {% endblock  %}

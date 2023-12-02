@@ -13,6 +13,8 @@ from case.models import *
 from case.serialize.address_serialize import *
 from case.serialize.case_serializer import CaseSerialize
 from case.serialize.diseases_serialize import DiseasesSerialize
+from case.views.utils.imports import ImportProcess
+from config.choice import ThreadResult
 from config.pagination import ResponsePagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -61,17 +63,13 @@ class ImportCaseView(generics.CreateAPIView):
     permission_classes = [AllowAny | IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        data = self.request.data
-        for x in data:
-            cases = Case.objects.create(
-                animal=x['animal'],
-                diseases_id=x['diseaseId'],
-                village_id=x['villageId'],
-                address=x['address'],
-                latitude=x['latitude'],
-                longitude=x['longitude'],
-                date_discovered= datetime.strptime(x['dateDiscovered'], "%d/%m/%Y"),
-                total_case=x['jumlah'],
-            )
-        return response.Response({"message":"success import"})
+        result = ImportProcess().start_process(self.request.data)
+        if result == ThreadResult.ALREADY_RUN:
+            return response.Response({'message': 'Process import already in process'}, status=status.HTTP_208_ALREADY_REPORTED)
+        elif result == ThreadResult.ERROR:
+            return response.Response({'message': 'import Count error. Try again later'}, status=status.HTTP_400_BAD_REQUEST)
+        elif result == ThreadResult.OK:
+            return response.Response({'message': 'Process import started'}, status=status.HTTP_200_OK)
+        return response.Response(status=status.HTTP_200_OK)
+    
         

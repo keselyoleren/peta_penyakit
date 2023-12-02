@@ -60,7 +60,7 @@ class CaseApiView(generics.ListAPIView):
 class ImportCaseView(generics.CreateAPIView):
     serializer_class = CaseSerialize
     queryset = Case.objects.all()
-    permission_classes = [AllowAny | IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         result = ImportProcess().start_process(self.request.data)

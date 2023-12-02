@@ -64,4 +64,4 @@ class ImportThread(Thread):
                         progress_bar.update(1)
                         self.pusher_client.trigger('penyakit-channel', 'progress-event', {'progress': f"{progress_bar.n / total_records * 100:.2f}"})
             except Exception as e:
-                print(f"Error during import: {e}")
+                self.pusher_client.trigger('error-channel', 'error-event', {'message': f"Proscess Error: {e}"})

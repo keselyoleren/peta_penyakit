@@ -118,6 +118,11 @@
     channel.bind('progress-event', function(data) {
       console.log(JSON.stringify(data));
     });
+
+    var channel_err = pusher.subscribe('error-channel');
+    channel.bind('error-event', function(data) {
+      console.log(JSON.stringify(data));
+    }); 
   </script>
 
   {% endblock  %}

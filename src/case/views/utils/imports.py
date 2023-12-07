@@ -50,7 +50,8 @@ class ImportThread(Thread):
             try:
                 with transaction.atomic():
                     for x in self.data:
-                        print(datetime.strptime(x['dateDiscovered'], "%d/%m/%Y %H:%M"))
+                        date_string = x['dateDiscovered']
+                        date_discovered = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S.%fZ")
                         cases = Case.objects.create(
                             animal=x['animal'],
                             diseases_id=x['diseaseId'],
@@ -58,8 +59,7 @@ class ImportThread(Thread):
                             address=x['address'],
                             latitude=x['latitude'],
                             longitude=x['longitude'],
-                            date_discovered= datetime.strptime(x['dateDiscovered'], "%d/%m/%Y %H:%M"),
-                            # date_discovered= x['dateDiscovered'],
+                            date_discovered=date_discovered,
                             total_case=x['jumlah'],
                         )
                         cases.save()

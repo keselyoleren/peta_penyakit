@@ -50,6 +50,7 @@ class ImportThread(Thread):
             try:
                 with transaction.atomic():
                     for x in self.data:
+                        print(datetime.strptime(x['dateDiscovered'], "%d/%m/%Y %H:%M"))
                         cases = Case.objects.create(
                             animal=x['animal'],
                             diseases_id=x['diseaseId'],
@@ -57,11 +58,13 @@ class ImportThread(Thread):
                             address=x['address'],
                             latitude=x['latitude'],
                             longitude=x['longitude'],
-                            date_discovered= datetime.strptime(x['dateDiscovered'], "%d/%m/%Y"),
+                            date_discovered= datetime.strptime(x['dateDiscovered'], "%d/%m/%Y %H:%M"),
+                            # date_discovered= x['dateDiscovered'],
                             total_case=x['jumlah'],
                         )
                         cases.save()
                         progress_bar.update(1)
                         self.pusher_client.trigger('penyakit-channel', 'progress-event', {'progress': f"{progress_bar.n / total_records * 100:.2f}"})
             except Exception as e:
+                print(e)
                 self.pusher_client.trigger('error-channel', 'error-event', {'message': f"Proscess Error: {e}"})

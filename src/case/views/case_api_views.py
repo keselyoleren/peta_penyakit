@@ -2,6 +2,7 @@ from datetime import datetime
 from rest_framework import (
     generics,
     status,
+    views,
     viewsets,
     response
 )
@@ -20,7 +21,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
-class CaseApiView(generics.ListAPIView):
+class CaseApiView(generics.ListAPIView, generics.DestroyAPIView):
     serializer_class = CaseSerialize
     queryset = Case.objects.all()
     permission_classes = [AllowAny | IsAuthenticated]
@@ -56,6 +57,25 @@ class CaseApiView(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
+    def destroy(self, request, *args, **kwargs):
+        try:
+            case = Case.objects.get(id=kwargs['case_id'])
+            case.delete()
+            return response.Response({"nessage":"delete success"}, status=status.HTTP_200_OK)
+        except Case.DoesNotExist:
+            return response.Response({"nessage":"case not found"}, status=status.HTTP_404_NOT_FOUND)
+
+class DeleteMultipleCaseView(views.APIView):
+    queryset = Case.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            case_ids = request.data.get('case_ids')
+            Case.objects.filter(id__in=case_ids).delete()
+            return response.Response({"nessage":"delete success"}, status=status.HTTP_200_OK)
+        except Case.DoesNotExist:
+            return response.Response({"nessage":"case not found"}, status=status.HTTP_404_NOT_FOUND)
 
 class ImportCaseView(generics.CreateAPIView):
     serializer_class = CaseSerialize

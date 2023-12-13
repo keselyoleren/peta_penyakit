@@ -13,11 +13,12 @@ class RegencyListView(IsAuthenticated, ListView):
     model = Regency
     template_name = 'regency/list.html'
     context_object_name = 'list_regency'
+    paginate_by = 10
     
     def get_queryset(self):
         if 'province' in self.request.GET:
             return Regency.objects.filter(province_id=self.request.GET['province'])
-        return super().get_queryset().filter(province_id=None)
+        return super().get_queryset()
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

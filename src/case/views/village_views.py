@@ -15,12 +15,13 @@ class VillageListView(IsAuthenticated, ListView):
     model = Village
     template_name = 'village/list.html'
     context_object_name = 'list_village'
+    paginate_by = 10
     
     def get_queryset(self):
         if 'regency' in self.request.GET:
             with contextlib.suppress(Exception):
                 return super().get_queryset().filter(sub_district_id=self.request.GET['sub_district'])
-        return super().get_queryset().filter(sub_district_id=None)
+        return super().get_queryset()
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -37,9 +38,9 @@ class VillageListView(IsAuthenticated, ListView):
 
 class VillageCreateView(IsAuthenticated, CreateView):
     model = Village
-    template_name = 'component/form.html'
+    template_name = 'village/form.html'
     form_class = VillageForm
-    success_url = reverse_lazy('vlillage-list')
+    success_url = reverse_lazy('village-list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -52,9 +53,9 @@ class VillageCreateView(IsAuthenticated, CreateView):
 
 class VillageUpdateView(IsAuthenticated, UpdateView):
     model = Village
-    template_name = 'component/form.html'
+    template_name = 'village/form.html'
     form_class = VillageForm
-    success_url = reverse_lazy('vlillage-list')
+    success_url = reverse_lazy('village-list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -65,7 +66,7 @@ class VillageUpdateView(IsAuthenticated, UpdateView):
 class VillageDeleteView(IsAuthenticated, DeleteView):
     model = Village
     template_name = 'component/delete.html'
-    success_url = reverse_lazy('vlillage-list')
+    success_url = reverse_lazy('village-list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

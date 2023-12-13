@@ -15,6 +15,7 @@ class SubDistrictListView(IsAuthenticated, ListView):
     model = SubDistrict
     template_name = 'subdistrict/list.html'
     context_object_name = 'list_subdistrict'
+    paginate_by = 10
     
     def get_queryset(self):
         if 'regency' in self.request.GET:
@@ -22,7 +23,7 @@ class SubDistrictListView(IsAuthenticated, ListView):
                 return super().get_queryset().filter(regency_id=self.request.GET['regency'])
             except:
                 pass
-        return super().get_queryset().filter(regency_id=None)
+        return super().get_queryset()
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -39,7 +40,7 @@ class SubDistrictListView(IsAuthenticated, ListView):
 
 class SubDistrictCreateView(IsAuthenticated, CreateView):
     model = SubDistrict
-    template_name = 'component/form.html'
+    template_name = 'subdistrict/form.html'
     form_class = SubDistrictForm
     success_url = reverse_lazy('subdistrict-list')
 
@@ -54,7 +55,7 @@ class SubDistrictCreateView(IsAuthenticated, CreateView):
 
 class SubDistrictUpdateView(IsAuthenticated, UpdateView):
     model = SubDistrict
-    template_name = 'component/form.html'
+    template_name = 'subdistrict/form.html'
     form_class = SubDistrictForm
     success_url = reverse_lazy('subdistrict-list')
 

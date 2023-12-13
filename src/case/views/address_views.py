@@ -16,7 +16,7 @@ class ProvicnceViews(generics.ListAPIView):
     pagination_class = ResponsePagination
     
     def list(self, request, *args, **kwargs):
-        instance = self.queryset.all()
+        instance = self.queryset.all().order_by('name')
         page = self.paginate_queryset(instance)
         serializer = self.get_paginated_response(
             self.serializer_class(page, many=True).data
@@ -30,7 +30,7 @@ class RegencyApiView(generics.ListAPIView):
     pagination_class = ResponsePagination
     
     def list(self, request, *args, **kwargs):
-        instance = self.queryset.filter(province=kwargs['province_id'])
+        instance = self.queryset.filter(province=kwargs['province_id']).order_by('name')
         page = self.paginate_queryset(instance)
         serializer = self.get_paginated_response(
             self.serializer_class(page, many=True).data
@@ -43,7 +43,7 @@ class SubDistrictApiView(generics.ListAPIView):
     pagination_class = ResponsePagination
     
     def list(self, request, *args, **kwargs):
-        instance = self.queryset.filter(regency=kwargs['regency_id'])
+        instance = self.queryset.filter(regency=kwargs['regency_id']).order_by('name')
         page = self.paginate_queryset(instance)
         serializer = self.get_paginated_response(
             self.serializer_class(page, many=True).data
@@ -56,7 +56,7 @@ class VillageApiView(generics.ListAPIView):
     pagination_class = ResponsePagination
     
     def list(self, request, *args, **kwargs):
-        instance = self.queryset.filter(sub_district=kwargs['sub_district_id'])
+        instance = self.queryset.filter(sub_district=kwargs['sub_district_id']).order_by('name')
         page = self.paginate_queryset(instance)
         serializer = self.get_paginated_response(
             self.serializer_class(page, many=True).data

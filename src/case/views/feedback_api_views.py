@@ -24,7 +24,7 @@ class FeedbackApiView(viewsets.ModelViewSet):
         if self.request.user.is_authenticated:
             puskeswan = Puskeswan.objects.filter(id=self.request.user.puskeswan.id).first()
             user = AccountUser.objects.filter(puskeswan=puskeswan)
-            return super().get_queryset().filter(created_by__in=user)
+            return super().get_queryset().filter(sub_district__in=puskeswan.wilayah_pelayanan.all())
         return super().get_queryset()
     
     def get_serializer_class(self):

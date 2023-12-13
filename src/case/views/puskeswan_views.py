@@ -16,8 +16,8 @@ class PuskeswanListView(IsPuskeswan, ListView):
     context_object_name = 'list_puskeswan'
 
     def get_queryset(self):
-        if self.request.user.role == RoleUser.PUSKESWAN:
-            return super().get_queryset().filter(created_by=self.request.user)
+        if self.request.user.role in [RoleUser.PUSKESWAN]:
+            return super().get_queryset().filter(id=self.request.user.puskeswan.id)
         return super().get_queryset()
     
     def get_context_data(self, **kwargs):

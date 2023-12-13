@@ -1,5 +1,6 @@
 # myapp/views.py
 
+from turtle import pu
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate
@@ -19,7 +20,7 @@ class FeedbackListView(IsPublicAuth, ListView):
         puskeswan = self.request.user.puskeswan
         if puskeswan:
             user = AccountUser.objects.filter(puskeswan=puskeswan)
-            return super().get_queryset().filter(created_by__in=user)
+            return super().get_queryset().filter(sub_district__in=puskeswan.wilayah_pelayanan.all())
         return super().get_queryset()
     
     def get_context_data(self, **kwargs):

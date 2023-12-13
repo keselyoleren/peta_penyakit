@@ -19,4 +19,6 @@ class AbstractForm(forms.ModelForm):
                     'type':'datetime-local',
                     'class': 'form-control',
                 })
-        
+
+            if not get_user().is_superuser:
+                self.fields['created_by'].widget = forms.HiddenInput()

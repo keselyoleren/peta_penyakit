@@ -4,6 +4,7 @@ from django.db import models
 
 from config.choice import RoleUser
 from config.models import BaseModel
+from config.request import get_user
 
 # Create your models here.
 
@@ -11,10 +12,17 @@ class Puskeswan(BaseModel):
     name = models.CharField("Name", max_length=255)
     code = models.CharField("Code", max_length=255)
     wilayah_pelayanan = models.ManyToManyField('case.SubDistrict', related_name="puskeswan", blank=True)
-    created_by = models.ForeignKey("AccountUser", on_delete=models.CASCADE, related_name="Puskeswan")
+    created_by = models.ForeignKey("AccountUser", on_delete=models.CASCADE, related_name="Puskeswan", blank=True, null=True)
 
     def __str__(self) -> str:
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not get_user().is_superuser:
+            self.created_by = get_user()
+        return super().save(*args, **kwargs)
+
+        
 
 class AccountUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -36,3 +44,11 @@ class Feedback(BaseModel):
 
     def __str__(self) -> str:
         return self.name
+
+    def save(self, *args, **kwargs):
+        try:
+            if not get_user().is_superuser:
+                self.created_by = get_user()
+        except:
+            pass
+        return super().save(*args, **kwargs)

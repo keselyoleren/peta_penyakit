@@ -32,8 +32,20 @@
                                     <td>{{item.name}}</td>
                                     <td>{{item.email}}</td>
                                     <td>{{item.telephone}}</td>
-                                    <td>{{item.is_map_use_full}}</td>
-                                    <td>{{item.is_facility_use_full}}</td>
+                                    <td>
+                                        {% if item.is_map_use_full  %}
+                                            <span class="badge badge-success">Ya</span>
+                                        {% else %}
+                                            <span class="badge badge-danger">Tidak</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if item.is_facility_use_full  %}
+                                            <span class="badge badge-success">Ya</span>
+                                        {% else %}
+                                            <span class="badge badge-danger">Tidak</span>
+                                        {% endif %}
+                                    </td>
                                     <td>{{item.comment}}</td>
                                     <td>{{item.created_by}}</td>
                                 </tr>

@@ -13,12 +13,12 @@ class AbstractForm(forms.ModelForm):
         super(AbstractForm, self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
-        
+
             if field == 'date_discovered':
                 self.fields['date_discovered'].widget = forms.DateTimeInput(attrs={
                     'type':'datetime-local',
                     'class': 'form-control',
                 })
 
-            if not get_user().is_superuser:
+            if field == 'created_by' and not get_user().is_superuser:
                 self.fields['created_by'].widget = forms.HiddenInput()

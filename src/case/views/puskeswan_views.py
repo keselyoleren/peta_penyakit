@@ -24,7 +24,8 @@ class PuskeswanListView(IsPuskeswan, ListView):
         context = super().get_context_data(**kwargs)
         context['header'] = 'Puskeswan'
         context['header_title'] = 'List puskeswan'
-        context['btn_add'] = True
+        if self.request.user.role == RoleUser.ADMIN or self.request.user.is_superuser:
+            context['btn_add'] = True
         context['create_url'] = reverse_lazy('puskeswan-create')
         return context
 

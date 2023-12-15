@@ -15,7 +15,7 @@ class SubDistrictListView(IsAuthenticated, ListView):
     model = SubDistrict
     template_name = 'subdistrict/list.html'
     context_object_name = 'list_subdistrict'
-    paginate_by = 10
+    paginate_by = 100
     
     def get_queryset(self):
         if 'regency' in self.request.GET:

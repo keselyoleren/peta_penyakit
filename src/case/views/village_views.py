@@ -15,7 +15,7 @@ class VillageListView(IsAuthenticated, ListView):
     model = Village
     template_name = 'village/list.html'
     context_object_name = 'list_village'
-    paginate_by = 10
+    paginate_by = 100
     
     def get_queryset(self):
         if 'regency' in self.request.GET:

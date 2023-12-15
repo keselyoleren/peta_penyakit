@@ -13,7 +13,7 @@ class RegencyListView(IsAuthenticated, ListView):
     model = Regency
     template_name = 'regency/list.html'
     context_object_name = 'list_regency'
-    paginate_by = 10
+    paginate_by = 100
     
     def get_queryset(self):
         if 'province' in self.request.GET:

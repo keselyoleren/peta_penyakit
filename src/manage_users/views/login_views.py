@@ -44,6 +44,10 @@ class UserRegisterView(APIView):
         serializer = RegisterSerialize(data=request.data)
         if serializer.is_valid(raise_exception=True):
             puskeswan = Puskeswan.objects.filter(code=request.data.get('puskeswanCode')).first()
+            email_exist = AccountUser.objects.filter(email=request.data.get('email')).first()
+            if email_exist:
+                return Response({'message': 'Email sudah terdaftar'}, status=status.HTTP_400_BAD_REQUEST)
+
             user = AccountUser.objects.create_user(
                     email=request.data.get('email'),
                     username=request.data.get('email'),

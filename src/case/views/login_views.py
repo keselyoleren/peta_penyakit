@@ -121,14 +121,16 @@ class SignUpView(CreateView):
     def form_valid(self, form):
         puskes_code = self.request.POST.get('puskeswan_code', None)
         puskeswan = Puskeswan.objects.filter(code=puskes_code).first()
-        user = AccountUser.objects.filter(email=form.instance.email).first()
+        user = AccountUser.objects.filter(email=self.request.POST.get('email')).first()
         if user:
             messages.error(self.request, "Email sudah terdaftar")
             return super().form_invalid(form)
+        
         if puskeswan:
             form.instance.puskeswan = puskeswan
             messages.success(self.request, "Registrasi berhasil, silahkan login")
             return super().form_valid(form)
+        
         else:
             messages.error(self.request, "Kode Puskeswan tidak ditemukan")
             return super().form_invalid(form)

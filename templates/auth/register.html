@@ -47,9 +47,10 @@
                             </div>
                             <form method="POST" action=".">
                                 {% csrf_token %}
-                                <tr><th><label for="id_username">Username:</label></th><td><input type="text" name="username" autofocus class="form-control" autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username"></td></tr>
-                                <tr><th><label for="id_password1">Password:</label></th><td><input type="password" name="password1" autocomplete="current-password" class="form-control" pnameholder="Password" required id="id_password1"></td></tr>
-                                <tr><th><label for="id_password2">Validate Password:</label></th><td><input type="password" name="password2" autocomplete="current-password" class="form-control" pnameholder="validate Password" required id="id_password2"></td></tr>
+                                <tr><th><label for="id_username">Username:</label></th><td><input type="text" name="username" autofocus class="form-control" autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username"></td></tr><br>
+                                <tr><th><label for="id_email">Email:</label></th><td><input type="email" name="email" autofocus class="form-control" autocapitalize="none" autocomplete="Email" maxlength="150" required id="id_email"></td></tr><br>
+                                <tr><th><label for="id_password1">Password:</label></th><td><input type="password" name="password1" autocomplete="current-password" class="form-control" pnameholder="Password" required id="id_password1"></td></tr><br>
+                                <tr><th><label for="id_password2">Validate Password:</label></th><td><input type="password" name="password2" autocomplete="current-password" class="form-control" pnameholder="validate Password" required id="id_password2"></td></tr><br>
                                 <tr><th><label for="kode_puskeswan">Kode Puskeswan:</label></th><td><input type="text" name="puskeswan_code"  class="form-control" pnameholder="kode puskeswan" required id="id_password"></td></tr>
                                 <br>
                                 <div class="d-flex justify-content-center">

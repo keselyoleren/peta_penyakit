@@ -6,7 +6,8 @@ from django.contrib.auth import login, authenticate
 from case.form.case_form import CaseForm
 
 from config.permis import IsPublicAuth
-from case.models import Case
+from case.models import Case, Village
+from config.choice import RoleUser
 
 
 
@@ -14,6 +15,15 @@ class CaseListView(IsPublicAuth, ListView):
     model = Case
     template_name = 'case/list.html'
     context_object_name = 'list_case'
+
+    def get_queryset(self):
+        if self.request.user.role in [RoleUser.PUSKESWAN]:
+            village = []
+            for wil_id in self.request.user.puskeswan.wilayah_pelayanan.all():
+                village_id = Village.objects.filter(sub_district=wil_id)
+                village.extend(v_id.id for v_id in village_id)
+            return super().get_queryset().filter(village__in=village)
+        return super().get_queryset()
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

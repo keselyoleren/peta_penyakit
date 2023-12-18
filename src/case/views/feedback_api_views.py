@@ -7,6 +7,7 @@ from rest_framework import (
 from case.models import *
 from case.serialize.address_serialize import *
 from case.serialize.feedback_serialize import FeedbackSerialize, RetrevieFeedbackSerialize
+from config.choice import RoleUser
 from config.pagination import ResponsePagination
 
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -22,9 +23,10 @@ class FeedbackApiView(viewsets.ModelViewSet):
     
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            puskeswan = Puskeswan.objects.filter(id=self.request.user.puskeswan.id).first()
-            user = AccountUser.objects.filter(puskeswan=puskeswan)
-            return super().get_queryset().filter(sub_district__in=puskeswan.wilayah_pelayanan.all())
+            if self.request.user.role == RoleUser.PUSKESWAN:
+                puskeswan = Puskeswan.objects.filter(id=self.request.user.puskeswan.id).first()
+                user = AccountUser.objects.filter(puskeswan=puskeswan)
+                return super().get_queryset().filter(sub_district__in=puskeswan.wilayah_pelayanan.all())
         return super().get_queryset()
     
     def get_serializer_class(self):
